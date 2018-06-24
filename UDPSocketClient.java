@@ -12,14 +12,16 @@ import java.util.Scanner;
 /* simplex-talk server, UDP version */
 public class UDPSocketClient {
 
-    /**DatagramSocket: sending or receiving point for a packet delivery service.
+    /**
+     * DatagramSocket: sending or receiving point for a packet delivery service.
      * Each packet sent or received on a datagram socket is individually
      * addressed and routed. Multiple packets sent from one machine to another
      * may be routed differently, and may arrive in any order.
      */
     DatagramSocket Socket;
 
-    public UDPSocketClient() {}
+    public UDPSocketClient() {
+    }
 
     public void createAndListenSocket() throws IOException, ClassNotFoundException {
 
@@ -29,6 +31,7 @@ public class UDPSocketClient {
             int pin; // 4 numbers
             int Request; // used for telling server what action to take
             int amount; // amount of $ to deposit/ withdrawl
+            int balance;
 
             Socket = new DatagramSocket();
 
@@ -88,7 +91,7 @@ public class UDPSocketClient {
                         System.out.println("invalid selection. Please try again.");
                         break;
                 }
-                //  below is to send the client object
+                /* below is to send the client object*/
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 // This class implements an output stream in which the data is written into a byte array. 
                 //The buffer automatically grows as data is written to it. The data can be retrieved using toByteArray() and toString().
@@ -100,7 +103,7 @@ public class UDPSocketClient {
                 //objects can be reconstituted on another host or in another process.
 
                 os.writeObject(client);
-                // writes new client to send message
+                // writes new client object to send message
 
                 byte[] b = outputStream.toByteArray();
                 // method creates a newly allocated buffer with the size as the current size of this output stream.
@@ -125,10 +128,21 @@ public class UDPSocketClient {
 
                 Client atmMessage = (Client) is.readObject(); // reads message
                 System.out.println("Message received :: " + atmMessage); // prints message
-
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+//    /* 
+//    PSUDO:
+//    if (atmMessage(0) == 5)
+//    { print " balance/withdrawl/deposit request was a success." }
+//    else if (atmMessage(0) == 6) 
+//    { print ("error occured. please try again.")
+//     */
+//    public void ServerResponse() {
+//        
+//    }
 }
